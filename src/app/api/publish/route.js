@@ -11,9 +11,6 @@ const options = {
 const mongo = new MongoClient(uri, options);
 
 export async function GET(req) {
-  //   const url = new URL(req.url);
-  //   const query = new URLSearchParams(url.search);
-  //   const id = query.get("email");
   try {
     const client = await mongo.connect();
     const db = client.db("app-maker-pro");
@@ -22,5 +19,32 @@ export async function GET(req) {
     return NextResponse.json(publish);
   } catch (error) {
     return NextResponse.json({ message: "Failed" });
+  }
+}
+
+export async function POST(req) {
+  try {
+    let bodyObject = await req.json();
+    const client = await mongo.connect();
+    const db = client.db("app-maker-pro");
+    await db.collection("publishapp").updateOne(
+      { userEmail: bodyObject.userEmail },
+      {
+        $set: {
+          andriodApk: bodyObject.andriodApk,
+          andriodAab: bodyObject.andriodAab,
+          iosApk: bodyObject.iosApk,
+          iosAbb: bodyObject.iosAbb,
+          andriodReq: false,
+          iosReq: false,
+          andriodStatus: "done",
+          iosStatus: "done",
+        },
+      }
+    );
+    await mongo.close();
+    return NextResponse.json({ message: "success" });
+  } catch (error) {
+    return NextResponse.json({ message: "failed" });
   }
 }

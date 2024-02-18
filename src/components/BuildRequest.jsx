@@ -4,6 +4,25 @@ import Loader from "./Loader";
 const BuildRequest = () => {
   const [build, setBuild] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState({
+    andriodApk: "",
+    andriodAab: "",
+    iosApk: "",
+    iosAbb: "",
+  });
+
+  const submitBuildData = async (email) => {
+    try {
+      let res = await fetch("/api/publish", {
+        method: "POST",
+        body: JSON.stringify({ ...file, userEmail: email }),
+      });
+
+      if (res?.status == 200) {
+        alert("done");
+      }
+    } catch (error) {}
+  };
 
   const fetchResult = useCallback(async (quesId) => {
     const response = await fetch("/api/publish", {
@@ -42,15 +61,88 @@ const BuildRequest = () => {
                 class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               >
                 <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {b.userEmail}
+                </h5>
+                <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   Andriod - {b.andriodStatus} - {b.andriodReq ? "Want" : "None"}
                 </h5>
                 <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                   Ios - {b.iosStatus} - {b.iosReq ? "Want" : "None"}
                 </h5>
 
-                <a
-                  href="#"
+                <div className="mb-4">
+                  <label
+                    for="andriod_apk"
+                    className="block mb-2  font-medium text-gray-900 dark:text-white"
+                  >
+                    Andriod Apk -{b.andriodApk}
+                  </label>
+                  <input
+                    type="text"
+                    id="andriod_apk"
+                    className="bg-white border border-gray-300 text-gray-900 text-sm sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="andriod apk file"
+                    onChange={(e) =>
+                      setFile({ ...file, andriodApk: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    for="andriod_abb"
+                    className="block mb-2  font-medium text-gray-900 dark:text-white"
+                  >
+                    Andriod Abb - {b.andriodAab}
+                  </label>
+                  <input
+                    type="text"
+                    id="andriod_abb"
+                    className="bg-white border border-gray-300 text-gray-900 text-sm sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="andriod abb file"
+                    onChange={(e) =>
+                      setFile({ ...file, andriodAab: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    for="ios_apk"
+                    className="block mb-2  font-medium text-gray-900 dark:text-white"
+                  >
+                    Ios Apk -{b.iosApk}
+                  </label>
+                  <input
+                    type="text"
+                    id="ios_apk"
+                    className="bg-white border border-gray-300 text-gray-900 text-sm sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="ios apk file"
+                    onChange={(e) =>
+                      setFile({ ...file, iosApk: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    for="ios_abb"
+                    className="block mb-2  font-medium text-gray-900 dark:text-white"
+                  >
+                    Ios Abb {b.iosAbb}
+                  </label>
+                  <input
+                    type="text"
+                    id="ios_abb"
+                    className="bg-white border border-gray-300 text-gray-900 text-sm sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="ios abb file"
+                    onChange={(e) =>
+                      setFile({ ...file, iosAbb: e.target.value })
+                    }
+                  />
+                </div>
+
+                <button
+                  type="button"
                   class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={() => submitBuildData(b.userEmail)}
                 >
                   Read more
                   <svg
@@ -68,7 +160,7 @@ const BuildRequest = () => {
                       d="M1 5h12m0 0L9 1m4 4L9 9"
                     />
                   </svg>
-                </a>
+                </button>
               </div>
             ))}
           </div>

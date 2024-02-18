@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const SecretCode = () => {
   const [randomId, setRandomId] = useState("");
+  const [link, setLink] = useState("");
 
   const createRandom = () => {
     var firstPart = (Math.random() * 46656) | 0;
@@ -17,6 +18,7 @@ const SecretCode = () => {
         secretCode: id,
         website: "",
         userEmail: "",
+        downloadLink: link,
       };
 
       let res = await fetch("/api/applist", {
@@ -25,7 +27,7 @@ const SecretCode = () => {
       });
 
       if (res?.status == 200) {
-        setRandomId("")
+        setRandomId("");
         alert("created");
       }
     }
@@ -49,6 +51,22 @@ const SecretCode = () => {
               Create Secret Code
             </h5>
             <div className="my-2 text-lg">My Code - {randomId}</div>
+
+            <div className="mb-4 my-2">
+              <label
+                for="andriod_apk"
+                className="block mb-2  font-medium text-gray-900 dark:text-white"
+              >
+                Download Link:
+              </label>
+              <input
+                type="text"
+                id="andriod_apk"
+                className="bg-white border border-gray-300 text-gray-900 text-sm sm:text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Andriod Download Link"
+                onChange={(e) => setLink(e.target.value)}
+              />
+            </div>
 
             <div className="flex justify-between my-6">
               <button
