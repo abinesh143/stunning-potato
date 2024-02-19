@@ -28,6 +28,7 @@ const SecretCode = () => {
 
       if (res?.status == 200) {
         setRandomId("");
+        setLink("")
         alert("created");
       }
     }
@@ -113,6 +114,14 @@ const SecretCode = () => {
                   />
                 </svg>
               </button>
+            </div>
+            <div className="flex justify-between mb-6">
+              <a
+                href={`https://www.googleapis.com/drive/v3/files/${link}?alt=media&key=AIzaSyAA9ERw-9LZVEohRYtCWka_TQc6oXmvcVU&supportsAllDrives=True`}
+                class="focus:outline-none text-white text-center bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm w-full py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+              >
+                Testing
+              </a>
             </div>
           </div>
         </div>
