@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import BuildRequest from "../components/BuildRequest";
 import Feedback from "../components/Feeback";
 import SecretCode from "@/components/SecretCode";
+import MetaData from "@/components/MetaData";
+import UserList from "@/components/UserList";
+import ReviewRequest from "@/components/ReviewRequest";
+import Promotion from "@/components/Promotion";
 
 const Account = () => {
   const [activeTab, setActiveTab] = useState("info");
@@ -132,12 +136,7 @@ const Account = () => {
                 >
                   <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Notification
-                </span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
-                </span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Meta Data</span>
               </div>
             </li>
             <li>
@@ -158,9 +157,7 @@ const Account = () => {
                 >
                   <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Monetization
-                </span>
+                <span className="flex-1 ms-3 whitespace-nowrap">User List</span>
               </div>
             </li>
             <li>
@@ -187,7 +184,33 @@ const Account = () => {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Download</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Reviews
+                </span>
+              </div>
+            </li>
+            <li>
+              <div
+                className={`${
+                  activeTab === "promotion"
+                    ? "bg-blue-500"
+                    : "hover:bg-gray-100"
+                } flex items-center p-2 text-gray-900 rounded-lg dark:text-white cursor-pointer dark:hover:bg-gray-700 group`}
+                onClick={() => setActiveTab("promotion")}
+              >
+                <svg
+                  className={`${
+                    activeTab === "promote" ? "text-gray-900" : "text-gray-500"
+                  } w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 18"
+                >
+                  <path d="M18 0H6a2 2 0 0 0-2 2h14v12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Z" />
+                  <path d="M14 4H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM2 16v-6h12v6H2Z" />
+                </svg>
+                <span className="flex-1 ms-3 whitespace-nowrap">Promotion</span>
               </div>
             </li>
           </ul>
@@ -209,15 +232,19 @@ const Account = () => {
           </div>
         ) : activeTab === "push" ? (
           <div>
-            <BuildRequest />
+            <MetaData />
           </div>
         ) : activeTab === "ads" ? (
           <div>
-            <BuildRequest />
+            <UserList />
           </div>
         ) : activeTab === "download" ? (
           <div>
-            <BuildRequest />
+            <ReviewRequest />
+          </div>
+        ) : activeTab === "promotion" ? (
+          <div>
+            <Promotion />
           </div>
         ) : null}
       </div>
